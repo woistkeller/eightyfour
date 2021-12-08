@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const userAPI = createApi({
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://127.0.0.1:5000",
+    baseUrl: "https://eightyfourserver.herokuapp.com/",
     prepareHeaders: (headers, { getState }) => {
       const token = getState().authUser.token;
       if (token) {
