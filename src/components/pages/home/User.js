@@ -30,7 +30,6 @@ export default function Login() {
             readOnly
           />
         </FirstLine>
-        {console.log(user)}
         <Bio>{user.bio}</Bio>
       </User>
 

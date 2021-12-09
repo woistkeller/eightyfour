@@ -24,11 +24,9 @@ const searchAPI = {
       },
     })
       .then((re) => {
-        console.log(re)
         if (re) return { message: re.data.data, status: true };
       })
       .catch((er) => {
-        console.log(er.response);
         return { message: er.response, status: false };
       });
   },

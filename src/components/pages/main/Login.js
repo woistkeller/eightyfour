@@ -34,9 +34,7 @@ export default function Login() {
     e.preventDefault();
     try {
       const response = await auth({ username, password });
-      console.log(response);
       if (response.data.ok) {
-        console.log(response.data);
         dispatch(
           setUser({
             username: response.data.user.username,

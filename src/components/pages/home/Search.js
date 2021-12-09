@@ -41,7 +41,6 @@ export default function Search() {
   return (
     <>
       <Container actived={activing}>
-        {console.log(response)}
         <Form>
           <form
             style={{
