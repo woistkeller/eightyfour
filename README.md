@@ -6,11 +6,11 @@
 
 <h2>Structure</h2>
 
-I like to use folders to mimic the project structure. So in the components folder, you can find all the global components, and you can go through folders to locate yourself as using the application. This way I can still have different components with different functions with same name.
+I like to use folders to mimic the structure of the project. So in the components folder, you can find all the global components, and you can scroll through folders to locate how using the application. This way, I can still have different components with different functions with the same name.
 
-In the **api** folder, each file in to a specfic piece from de project.
+In the api folder, each file is for a specific slice of the project.
 
-Redux setup follows the documentation: redux store in **/app**, as your api folder as well. The slices can be find in **/features**
+Redux's configuration follows the documentation: redux store in /app, as does its api folder as well. The slices can be found in /features
 
 <h2>Issues</h2>
 
