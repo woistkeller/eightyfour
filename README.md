@@ -10,7 +10,7 @@ I like to use folders to mimic the structure of the project. So in the component
 
 In the api folder, each file is for a specific slice of the project.
 
-Redux's configuration follows the documentation: redux store in /app, as does its api folder as well. The slices can be found in /features
+Redux's configuration fol lows the documentation: redux store in /app, as does its api folder as well. The slices can be found in /features
 
 <h2>Issues</h2>
 

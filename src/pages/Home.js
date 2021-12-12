@@ -90,4 +90,14 @@ const Authenticated = styled.div`
   background: linear-gradient(180deg, #5834eb, #5146f0);
   border-radius: 15px;
   padding: 1rem;
+
+  @media (max-height: 720px) {
+    height: 90%;
+  }
+
+  @media (max-width: 530px) {
+    height: 100%;
+    border-radius: 0;
+    padding: 0.5rem;
+  }
 `;

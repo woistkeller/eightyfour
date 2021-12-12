@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import styled from "styled-components";
 
-import { Button, Alert,TextField } from "@mui/material";
+import { Button, Alert, TextField } from "@mui/material";
 
 import { useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
@@ -137,6 +137,11 @@ const Container = styled.div`
   left: ${(props) => (props.actived ? "0" : "5rem")};
   opacity: ${(props) => (props.actived ? "1" : "0")};
   transition: all ease-out 100ms;
+
+  @media (max-width: 530px) {
+    height: 100%;
+    padding: 0.5rem;
+  }
 
   button {
     margin: 0.4rem 0;

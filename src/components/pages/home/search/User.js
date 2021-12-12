@@ -110,9 +110,13 @@ const Container = styled.div`
   margin-top: 1rem;
   display: flex;
   flex-direction: column;
-
   padding: 1rem;
   overflow: hidden;
+
+  @media (max-width: 530px) {
+    height: 100%;
+    padding: 0.5rem;
+  }
 `;
 
 const FirstLine = styled.div`

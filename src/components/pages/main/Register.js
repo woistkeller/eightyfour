@@ -219,6 +219,11 @@ const Container = styled.div`
   background-color: white;
   overflow: hidden;
 
+  @media (max-width: 530px) {
+    height: 100%;
+    padding: 0.5rem;
+  }
+
   right: ${(props) => (props.actived ? "0" : "5rem")};
   opacity: ${(props) => (props.actived ? "1" : "0")};
   transition: all ease-out 100ms;
