@@ -12,7 +12,6 @@ import { useAuth } from "../../../../hooks/useAuth";
 
 export default function User({ user }) {
   const [rating, setRating] = useState(3);
-  const [isLoading, setIsLoading] = useState(false);
   const [response, setResponse] = useState({ status: false });
 
   const loggedUser = useAuth().user;
@@ -23,7 +22,6 @@ export default function User({ user }) {
 
   var handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
     try {
       const response = await searchAPI.rating(
         rating,
@@ -36,7 +34,6 @@ export default function User({ user }) {
     } catch (er) {
       setResponse({ message: "an error occur, sorry", status: false });
     }
-    setIsLoading(false);
   };
 
   return (
@@ -60,7 +57,6 @@ export default function User({ user }) {
           Rate User
           <Rating
             name="read-only"
-            value={user.userRating.rating}
             precision={0.1}
             readOnly
             value={

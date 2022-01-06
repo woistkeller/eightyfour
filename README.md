@@ -18,9 +18,10 @@ All these issues will be resolved over time due to my lack of time, active studi
 
 - [ ] Users rating not updating after rate added
 - [ ] Logged user rating not update due Redux-Persist
-- [ ] Login erros not showing
+- [ ] Login feedback don't showing
 - [ ] Improve phones usebility
 - [ ] Upgrade the host and change domain
 - [ ] The empty tab icon (this trigger me too)
-- [ ] Find more bugs to put here :D
+- [x] Find more bugs to put here :D (it didn't even take too long)
+- [ ] The volume is reset to 0.5 each time the song is played
 

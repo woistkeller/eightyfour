@@ -75,7 +75,16 @@ export default function Search() {
           <User user={response} />
         ) : (
           response.status !== "" && (
-            <Alert variant="error" style={{ width: "100%" }}>
+            <Alert
+              variant="filled"
+              severity="error"
+              style={{
+                margin: "0.2rem 0",
+                color: "#141414",
+                backgroundColor: "#ff4f4f",
+                width: "100%",
+              }}
+            >
               {response.message}
             </Alert>
           )

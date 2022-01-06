@@ -26,11 +26,11 @@ export default function Song({ song, propsSong, propsClose }) {
   const [isOpen, setIsopen] = useState(false);
 
   useEffect(() => {
-    setIsplaying(false)
-    setPercentage(0)
-    setIsopen(false)
+    setIsplaying(false);
+    setPercentage(0);
+    setIsopen(false);
     player.current.volume = 0.5;
-  }, [song])
+  }, [song]);
 
   function handleOpen() {
     setIsopen(!isOpen);
@@ -60,14 +60,11 @@ export default function Song({ song, propsSong, propsClose }) {
     } else clearInterval(intervalId);
   }
 
-  useEffect(() => {
-    handleProgress();
-  }, [isPlaying]);
-
   function handlePlayer() {
     player.current.volume = 0.5;
 
     if (isPlaying) {
+      handleProgress();
       player.current.currentTime = 0;
       player.current.pause();
       setIsplaying(false);

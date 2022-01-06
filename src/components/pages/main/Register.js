@@ -228,10 +228,6 @@ const Container = styled.div`
   opacity: ${(props) => (props.actived ? "1" : "0")};
   transition: all ease-out 100ms;
 
-  &:after {
-    content: "";
-  }
-
   button {
     margin: 0.4rem 0;
   }

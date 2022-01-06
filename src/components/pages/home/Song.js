@@ -55,14 +55,11 @@ export default function Song({ song }) {
     } else clearInterval(intervalId);
   }
 
-  useEffect(() => {
-    handleProgress();
-  }, [isPlaying]);
-
   function handlePlayer() {
     player.current.volume = 0.1;
 
     if (isPlaying) {
+      handleProgress();
       player.current.currentTime = 0;
       player.current.pause();
       setIsplaying(false);
