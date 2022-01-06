@@ -32,25 +32,36 @@ export default function Login() {
 
   var handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await auth({ username, password });
-      if (response.data.ok) {
+
+    if (username.length === 0 || password.length === 0) {
+      return setError({
+        message: "Please enter a username and password",
+        error: "true",
+      });
+    }
+
+    const { data, error } = await auth({ username, password });
+
+    if (typeof error !== "undefined")
+      if (error.status === 401)
+        return setError({
+          message: error.data.message,
+          error: "true",
+        });
+
+    if (typeof data !== "undefined")
+      if (data.ok) {
         dispatch(
           setUser({
-            username: response.data.user.username,
-            rating: response.data.user.rating,
-            bio: response.data.user.bio,
-            song: response.data.user.song,
-            token: response.data.token,
+            username: data.user.username,
+            rating: data.user.rating,
+            bio: data.user.bio,
+            song: data.user.song,
+            token: data.token,
           })
         );
         navigate("/home");
-      } else {
-        setError({ message: response.error.data.message, error: true });
       }
-    } catch (er) {
-      setError({ data: "a general error occurs", error: true });
-    }
   };
 
   return (
