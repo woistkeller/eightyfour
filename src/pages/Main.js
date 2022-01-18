@@ -7,62 +7,45 @@ import Login from "../components/pages/main/Login";
 import Button from "@mui/material/Button";
 
 export default function Main() {
-  const [typeRequest, setTypeRequest] = useState("login");
-
-  var invertedTypeRequest = typeRequest === "login" ? "register" : "login";
-
-  function handleTypeRequestChange() {
-    setTypeRequest(typeRequest === "login" ? "register" : "login");
-  }
+  const [page, setPage] = useState("login");
 
   return (
     <Container>
-      <Authentication>
-        {typeRequest === "login" ? (
-          <Login selected={typeRequest} />
-        ) : (
-          <Register selected={typeRequest} />
-        )}
-        <Button
-          fullWidth
-          variant="contained"
-          size="small"
-          onClick={handleTypeRequestChange}
-          style={{ backgroundColor: "white", color: "#141414" }}
-        >
-          I want to {invertedTypeRequest}
-        </Button>
-      </Authentication>
+      {page === "login" ? (
+        <Login selected={page} />
+      ) : (
+        <Register selected={page} />
+      )}
+      <Button
+        fullWidth
+        variant="contained"
+        style={{ marginTop: "1rem" }}
+        onClick={() => {
+          setPage(page === "login" ? "register" : "login");
+        }}
+      >
+        I want to {page}
+      </Button>
     </Container>
   );
 }
 
 const Container = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-`;
-
-const Authentication = styled.div`
-  display: flex;
   justify-content: space-between;
   align-items: center;
   flex-direction: column;
-  height: 80%;
+  height: 90vh;
   width: 100%;
   max-width: 500px;
+
   background: linear-gradient(180deg, #5834eb, #5146f0);
   border-radius: 15px;
   padding: 1rem;
 
-  @media (max-height: 720px) {
-    height: 90%;
-  }
-
   @media (max-width: 530px) {
     height: 100%;
     border-radius: 0;
-    padding: 0.5rem;
+    padding: 0.7rem;
   }
 `;

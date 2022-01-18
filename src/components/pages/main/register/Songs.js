@@ -2,20 +2,12 @@ import styled from "styled-components";
 
 import Song from "./Song";
 
-export default function Songs({ songs, propsSong, propsClose }) {
-
+export default function Songs({ songs, handleSong }) {
   return (
     <Container>
       <SongList>
         {songs.map((song, key) => {
-          return (
-            <Song
-              key={key}
-              song={song}
-              propsSong={propsSong}
-              propsClose={propsClose}
-            />
-          );
+          return <Song key={key} song={song} handleSong={handleSong} />;
         })}
       </SongList>
     </Container>
@@ -35,12 +27,12 @@ const Container = styled.div`
 const SongList = styled.ul`
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin: 0.3rem 0;
   height: 100%;
   width: 100%;
   overflow-y: scroll;
 
   &::-webkit-scrollbar {
-  display: none;
-}
+    display: none;
+  }
 `;

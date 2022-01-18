@@ -1,27 +1,32 @@
-[<h1>**EIGHTY FOUR**</h1>](https://eighty4.herokuapp.com)
+[<h1>**EIGHTY FOUR**</h1>](https://eightyfour.vercel.app)
 
 ![eightyfour screenshoot](./demo/eightyfour1.png)
 ![eightyfour screenshoot](./demo/eightyfour2.png)
 ![eightyfour screenshoot](./demo/eightyfour3.png)
 
-<h2>Structure</h2>
+### **Want an app that uses Redux to overkill simple state management in React to have fun with your friends? Try the [Eighty Four](https://eightyfour.vercel.app)**
 
-I like to use folders to mimic the structure of the project. So in the components folder, you can find all the global components, and you can scroll through folders to locate how using the application. This way, I can still have different components with different functions with the same name.
+## **About**
+I created EightyFour to learn, critique(social credit platforms) and demonstrate my knowledge in react. And I faced a lot of problems, and now, I not only learned a lot about React nesting, Re-renders and state, but how not to make a messy code. I'm a little proud, not for what EightyFour became, but for what I learned from it. My latest projects couldn't be as good without Eighty Four.
 
-In the api folder, each file is for a specific slice of the project.
 
-Redux's configuration fol lows the documentation: redux store in /app, as does its api folder as well. The slices can be found in /features
-
-<h2>Issues</h2>
+## **Issues**
 
 All these issues will be resolved over time due to my lack of time, active studies and side projects.
 
 - [ ] Users rating not updating after rate added
 - [ ] Logged user rating not update due Redux-Persist
-- [ ] Login feedback don't showing
-- [ ] Improve phones usebility
+- [x] Login feedback don't showing
+- [x] Improve phones usebility
 - [ ] Upgrade the host and change domain
-- [ ] The empty tab icon (this trigger me too)
+- [x] The empty tab icon (this trigger me too)
 - [x] Find more bugs to put here :D (it didn't even take too long)
-- [ ] The volume is reset to 0.5 each time the song is played
+- [x] The volume is reset to 0.5 each time the song is played
 
+We are doing very well, hum
+
+**If you wanna help**
+
+Keep this in mind: to understand the folders, just think like that of the actual project. The folders are related to the real nest, like in the app. I thought it was the easiest way to have a good understanding of the code. Now, they just look kind of weird. But putting them in a single folder doesn't look very good to me.
+
+Everything follows its respective documentation. Ex.: redux-toolkit says to put the store inside the application.  So you'll do fine.

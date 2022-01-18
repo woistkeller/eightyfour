@@ -1,12 +1,14 @@
+//react
 import { useEffect, useState } from "react";
 
+//styles
 import styled from "styled-components";
+import { Button, Alert, TextField, Typography } from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
 
-import { Button, Alert, TextField } from "@mui/material";
-
+//redux and rtk
 import { useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
-
 import { setUser } from "../../../features/user/userSlice";
 import { useAuthMutation } from "../../../app/api/user.api";
 import { useAuth } from "../../../hooks/useAuth";
@@ -14,6 +16,7 @@ import { useAuth } from "../../../hooks/useAuth";
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [activing, setActiving] = useState(false);
   const [error, setError] = useState(false);
 
@@ -21,7 +24,6 @@ export default function Login() {
   const navigate = useNavigate();
 
   const [auth] = useAuthMutation();
-
   const user = useAuth().user;
 
   useEffect(() => {
@@ -33,23 +35,25 @@ export default function Login() {
   var handleSubmit = async (e) => {
     e.preventDefault();
 
+    setIsLoading(true);
     if (username.length === 0 || password.length === 0) {
-      return setError({
+      setError({
         message: "Please enter a username and password",
         error: "true",
       });
+      setIsLoading(false);
     }
 
     const { data, error } = await auth({ username, password });
 
     if (typeof error !== "undefined")
-      if (error.status === 401)
-        return setError({
+      if (error.status !== 200)
+        setError({
           message: error.data.message,
           error: "true",
         });
 
-    if (typeof data !== "undefined")
+    if (typeof data !== "undefined") {
       if (data.ok) {
         dispatch(
           setUser({
@@ -62,35 +66,21 @@ export default function Login() {
         );
         navigate("/home");
       }
+
+      setIsLoading(false);
+    }
+
+    setIsLoading(false);
   };
 
   return (
     <Container actived={activing}>
-      {user.name.length > 0 && (
-        <Link to="/home">
-          <Button size="small" fullWidth variant="contained">
-            Progress as {user.name}
-          </Button>
-        </Link>
-      )}
       <form
         onSubmit={(e) => {
           handleSubmit(e);
         }}
       >
-        {error && (
-          <Alert
-            variant="filled"
-            severity="error"
-            style={{
-              margin: "0.2rem 0",
-              color: "#141414",
-              backgroundColor: "#ff4f4f",
-            }}
-          >
-            {error.message}
-          </Alert>
-        )}
+        <Typography variant="h5">Login</Typography>
         <TextField
           fullWidth
           onChange={(e) => {
@@ -101,6 +91,7 @@ export default function Login() {
           size="small"
           label="Username"
           margin="dense"
+          required
           inputProps={{ maxLength: 12 }}
         />
         <TextField
@@ -114,47 +105,70 @@ export default function Login() {
           label="password"
           type="password"
           margin="dense"
+          required
           inputProps={{ maxLength: 32 }}
         />
-        <Button
+        <LoadingButton
           fullWidth
           type="submit"
-          size="small"
-          variant="outlined"
+          variant="contained"
           style={{
-            background: "linear-gradient(180deg, #5834eb, #5146f0)",
-            color: "white",
+            marginTop: "1rem",
           }}
+          loading={isLoading}
         >
           Login
-        </Button>
+        </LoadingButton>
+        {user.name.length > 0 && (
+          <Link to="/home">
+            <Button
+              fullWidth
+              color="success"
+              variant="contained"
+              style={{
+                marginTop: "1rem",
+              }}
+            >
+              Continue as {user.name}
+            </Button>
+          </Link>
+        )}
       </form>
+      <div>
+        {error && (
+          <Alert
+            variant="filled"
+            severity="error"
+            style={{
+              marginTop: "1rem",
+            }}
+          >
+            {error.message}
+          </Alert>
+        )}
+      </div>
     </Container>
   );
 }
 
 const Container = styled.div`
-  position: relative;
   display: flex;
-  width: 100%;
-  height: 100%;
-  margin: 1rem 0;
-  justify-content: center;
+  position: relative;
+  justify-content: space-between;
   align-items: center;
   flex-direction: column;
+  left: ${(props) => (props.actived ? "0" : "5rem")};
+  opacity: ${(props) => (props.actived ? "1" : "0")};
+
+  width: 100%;
+  height: 100%;
   padding: 1rem;
   border-radius: 10px;
   background-color: white;
-  left: ${(props) => (props.actived ? "0" : "5rem")};
-  opacity: ${(props) => (props.actived ? "1" : "0")};
   transition: all ease-out 100ms;
 
   @media (max-width: 530px) {
     height: 100%;
-    padding: 0.5rem;
-  }
-
-  button {
-    margin: 0.4rem 0;
+    padding: 0.7rem;
   }
 `;

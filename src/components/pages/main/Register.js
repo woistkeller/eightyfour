@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 import styled from "styled-components";
 
-import { Button, Alert, TextField } from "@mui/material";
+import { Button, Alert, TextField, Typography } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 
 import { BsSpotify } from "react-icons/bs";
@@ -20,18 +20,10 @@ export default function Register() {
   const [isLoading, setIsloading] = useState(false);
   const [response, setResponse] = useState(false);
 
-  const [handleSongSelector, setHandleSongSelector] = useState(false);
-  const [handleSong, setHandleSong] = useState(false);
+  const [song, setSong] = useState();
+  const [songSelector, setSongSelector] = useState(false);
 
   const [activing, setActiving] = useState(false);
-
-  function closingSongSelector() {
-    setHandleSongSelector(false);
-  }
-
-  function choosingSong(e) {
-    setHandleSong(e);
-  }
 
   useEffect(() => {
     setTimeout(() => {
@@ -39,52 +31,46 @@ export default function Register() {
     }, 20);
   }, []);
 
-  var handleSubmit = async (e) => {
+  //select and close function. Pass no value to just close, without really choosing something
+  var handleSong = async (e) => {
+    setSong(e);
+    setSongSelector(false);
+  };
+
+  var submit = async (e) => {
     e.preventDefault();
+
     setIsloading(true);
     try {
       const response = await registerAPI.register(
         username,
         password,
         bio,
-        handleSong
+        song
       );
       if (response.status === true) {
-        setResponse({ message: "successful registrered", status: true });
+        setResponse({ message: "successfully registered", status: true });
       } else {
         setResponse({ message: response.message, status: false });
       }
     } catch (er) {
       setResponse({ message: "an error occur, sorry", status: false });
     }
+
     setIsloading(false);
   };
 
   return (
     <Container actived={activing}>
       <form
-        style={{ width: "100%" }}
         onSubmit={(e) => {
-          handleSubmit(e);
+          submit(e);
         }}
       >
-        {response && (
-          <Alert
-            variant="filled"
-            severity={response.status ? "success" : "error"}
-            style={{
-              margin: "0.2rem 0",
-              color: "#141414",
-              backgroundColor: `${response.status ? "#1DB954" : "#ff4f4f"}`,
-            }}
-          >
-            {response.message}
-          </Alert>
-        )}
+        <Typography variant="h5">Register</Typography>
         <TextField
           fullWidth
           required
-          autoComplete="off"
           onChange={(e) => {
             setUsername(e.target.value);
           }}
@@ -163,9 +149,7 @@ export default function Register() {
           helperText={
             <b
               style={
-                bio.length - 120 === 0
-                  ? { color: "orange" }
-                  : { color: "black" }
+                bio.length - 120 === 0 ? { color: "red" } : { color: "black" }
               }
             >{`you have ${
               120 - bio.length !== 0 ? 120 - bio.length : "no"
@@ -174,61 +158,72 @@ export default function Register() {
         />
         <Button
           fullWidth
-          variant="outlined"
-          style={{ backgroundColor: "#1DB954", color: "black" }}
+          style={{ backgroundColor: "#1DB954", marginTop: "1rem" }}
+          startIcon={<BsSpotify />}
           onClick={() => {
-            setHandleSongSelector(!handleSongSelector);
+            setSongSelector(!songSelector);
           }}
         >
-          <BsSpotify />
-          {"\u00A0"}
-          {handleSong !== false
-            ? `${handleSong.title} - ${handleSong.artist}`
-            : "pick your favourite song"}
+          {typeof song !== "undefined"
+            ? song.title
+            : "Pick your favourite song"}
         </Button>
         <LoadingButton
           fullWidth
-          type="submit"
-          size="small"
           variant="contained"
+          type="submit"
+          style={{ marginTop: "1rem" }}
           loading={isLoading}
         >
-          register
+          Register
         </LoadingButton>
       </form>
-      <SongSelector
-        status={handleSongSelector}
-        propsSong={choosingSong}
-        propsClose={closingSongSelector}
-      />
+      <div>
+        {response && (
+          <Alert
+            variant="filled"
+            severity={response.status ? "success" : "error"}
+            style={{
+              marginTop: "1rem",
+            }}
+          >
+            {response.message}
+          </Alert>
+        )}
+      </div>
+      {songSelector && (
+        <SongSelector open={songSelector} handleSong={handleSong} />
+      )}
     </Container>
   );
 }
 
 const Container = styled.div`
   display: flex;
-  width: 100%;
-  height: 100%;
-  margin: 1rem 0;
   position: relative;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   flex-direction: column;
-  padding: 1rem;
-  border-radius: 10px;
-  background-color: white;
-  overflow: hidden;
-
-  @media (max-width: 530px) {
-    height: 100%;
-    padding: 0.5rem;
-  }
-
   right: ${(props) => (props.actived ? "0" : "5rem")};
   opacity: ${(props) => (props.actived ? "1" : "0")};
   transition: all ease-out 100ms;
 
-  button {
-    margin: 0.4rem 0;
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+  border-radius: 10px;
+  background-color: white;
+  overflow: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  @media (max-width: 530px) {
+    height: 100%;
+    padding: 0.7rem;
   }
 `;

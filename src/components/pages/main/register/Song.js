@@ -1,15 +1,8 @@
+//react
 import { useRef, useState, useEffect } from "react";
 
+//styles
 import styled from "styled-components";
-
-import Volume from "./Volume";
-
-import { HiVolumeUp } from "react-icons/hi";
-
-import { BsFillPlayFill, BsFillPauseFill } from "react-icons/bs";
-import { AiFillHeart } from "react-icons/ai";
-import { IoMdAlert } from "react-icons/io";
-
 import {
   CircularProgress,
   Box,
@@ -18,12 +11,25 @@ import {
   Tooltip,
 } from "@mui/material";
 
-export default function Song({ song, propsSong, propsClose }) {
+//icons
+import { HiVolumeUp } from "react-icons/hi";
+import { BsFillPlayFill, BsFillPauseFill } from "react-icons/bs";
+import { AiFillHeart } from "react-icons/ai";
+import { IoMdAlert } from "react-icons/io";
+
+//components
+import Volume from "./Volume";
+
+export default function Song({ song, handleSong }) {
   const player = useRef();
   const [isPlaying, setIsplaying] = useState(false);
   const [percentage, setPercentage] = useState();
   const [intervalId, setIntervalId] = useState();
   const [isOpen, setIsopen] = useState(false);
+
+  var handleVolume = (volume) => {
+    player.current.volume = volume;
+  };
 
   useEffect(() => {
     setIsplaying(false);
@@ -32,15 +38,7 @@ export default function Song({ song, propsSong, propsClose }) {
     player.current.volume = 0.5;
   }, [song]);
 
-  function handleOpen() {
-    setIsopen(!isOpen);
-  }
-
-  function handleVolume(volume) {
-    player.current.volume = volume;
-  }
-
-  function handleProgress() {
+  var handleProgress = () => {
     if (isPlaying === true) {
       var intervalIdtemp = setInterval(() => {
         try {
@@ -58,9 +56,9 @@ export default function Song({ song, propsSong, propsClose }) {
       }, 1000);
       setIntervalId(intervalIdtemp);
     } else clearInterval(intervalId);
-  }
+  };
 
-  function handlePlayer() {
+  var handlePlayer = () => {
     player.current.volume = 0.5;
 
     if (isPlaying) {
@@ -73,7 +71,7 @@ export default function Song({ song, propsSong, propsClose }) {
       player.current.play();
       setIsplaying(true);
     }
-  }
+  };
 
   useEffect(() => {
     player.current.load();
@@ -83,60 +81,55 @@ export default function Song({ song, propsSong, propsClose }) {
   }, [song]);
 
   return (
-    <>
-      <Container>
-        <audio ref={player}>
-          <source src={song.preview_url} />
-        </audio>
-        <img alt="" src={song.album.images[1].url} height="40" width="40" />
-        <Info>
-          <Title>
-            <Typography noWrap>{song.name}</Typography>
-          </Title>
-          <Artist>
-            <Typography noWrap>{song.artists[0].name}</Typography>
-          </Artist>
-        </Info>
-        <Controller>
-          {song.preview_url !== null ? (
-            <IconButton size="small" onClick={handleOpen}>
-              <HiVolumeUp color="black" />
-            </IconButton>
-          ) : null}
-          {isOpen && <Volume propsVolume={handleVolume} />}
-          {song.preview_url == null ? (
-            <Tooltip title="some previews are not available">
-              <IconButton>
-                <IoMdAlert color="red" />
-              </IconButton>
-            </Tooltip>
-          ) : (
-            <IconButton size="small" onClick={handlePlayer}>
-              <CircularProgressWithLabel
-                isPlaying={isPlaying}
-                value={percentage}
-              />
-            </IconButton>
-          )}
-          <IconButton
-            size="small"
-            onClick={() => {
-              propsSong({
-                title: song.name,
-                artist: song.artists[0].name,
-                preview: song.preview_url,
-                cover: song.album.images[1].url,
-              });
-              player.current.pause();
-              setIsplaying(false);
-              propsClose();
-            }}
-          >
-            <AiFillHeart color="red" />
+    <Container>
+      <audio ref={player}>
+        <source src={song.preview_url} />
+      </audio>
+      <img alt="" src={song.album.images[1].url} height="40" width="40" />
+      <Info>
+        <Title>
+          <Typography noWrap>{song.name}</Typography>
+        </Title>
+        <Artist>
+          <Typography noWrap>{song.artists[0].name}</Typography>
+        </Artist>
+      </Info>
+      <Controller>
+        {song.preview_url !== null ? (
+          <IconButton size="small">
+            <HiVolumeUp color="black" />
           </IconButton>
-        </Controller>
-      </Container>
-    </>
+        ) : null}
+        {isOpen && <Volume propsVolume={handleVolume} />}
+        {song.preview_url == null ? (
+          <Tooltip title="some previews are not available">
+            <IconButton>
+              <IoMdAlert color="red" />
+            </IconButton>
+          </Tooltip>
+        ) : (
+          <IconButton size="small" onClick={handlePlayer}>
+            <CircularProgressWithLabel
+              isPlaying={isPlaying}
+              value={percentage}
+            />
+          </IconButton>
+        )}
+        <IconButton
+          size="small"
+          onClick={() => {
+            handleSong({
+              title: song.name,
+              artist: song.artists[0].name,
+              preview: song.preview_url,
+              cover: song.album.images[1].url,
+            });
+          }}
+        >
+          <AiFillHeart color="red" />
+        </IconButton>
+      </Controller>
+    </Container>
   );
 }
 
@@ -144,29 +137,24 @@ const Container = styled.li`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.01rem 0.8rem;
-  overflow: hidden;
+  padding: 0.1rem 0.5rem;
   background-color: #dedede;
   border-radius: 10px;
+  width: 100%;
   margin: 0.5rem 0;
 `;
 
 const Info = styled.div`
-  text-indent: 0.7rem;
-  width: 70%;
+  text-indent: 0.5rem;
+  width: 100%;
   text-align: left;
   overflow: hidden;
 `;
 
-const Title = styled.div`
-  font-weight: bolder;
-  overflow: hidden;
-`;
+const Title = styled.div``;
 
 const Artist = styled.div`
-  font-weight: light;
   color: grey;
-  overflow: hidden;
 `;
 
 const Controller = styled.div`

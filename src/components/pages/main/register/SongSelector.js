@@ -9,21 +9,21 @@ import spotifyAPI from "../../../../api/spotify.api.js";
 
 import Songs from "./Songs";
 
-export default function SongSelector({ propsClose, status, propsSong }) {
+export default function SongSelector({ open, handleSong }) {
   const search = useRef();
-  const [songs, setSongs] = useState({});
+  const [songs, setSongs] = useState();
   const [isLoading, setIsLoading] = useState(false);
 
   var handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    const results = await spotifyAPI.getSpotifyContent(search.current.value);
-    setSongs(results);
+    const temp = await spotifyAPI.getSpotifyContent(search.current.value);
+    setSongs(temp);
     setIsLoading(false);
   };
 
   return (
-    <Container status={status}>
+    <Container open={open}>
       <form
         style={{ width: "100%" }}
         onSubmit={(e) => {
@@ -41,7 +41,6 @@ export default function SongSelector({ propsClose, status, propsSong }) {
         />
         <LoadingButton
           fullWidth
-          size="small"
           variant="contained"
           loading={isLoading}
           type="submit"
@@ -50,19 +49,21 @@ export default function SongSelector({ propsClose, status, propsSong }) {
           search
         </LoadingButton>
       </form>
-      {songs.length > 0 ? (
-        <Songs songs={songs} propsSong={propsSong} propsClose={propsClose} />
+      {typeof songs !== "undefined" ? (
+        <Songs songs={songs} handleSong={handleSong} />
       ) : null}
 
       <Button
         fullWidth
-        size="small"
+  
         variant="outlined"
         style={{
           background: "#141414",
           color: "white",
         }}
-        onClick={propsClose}
+        onClick={() => {
+          handleSong();
+        }}
       >
         close
       </Button>
@@ -71,19 +72,19 @@ export default function SongSelector({ propsClose, status, propsSong }) {
 }
 
 const Container = styled.div`
+  display: flex;
   background-color: white;
   position: absolute;
-  display: flex;
   width: 100%;
   height: 100%;
-  top: ${(props) => (!props.status ? "40rem" : "-1rem")};
-  opacity: ${(props) => (!props.status ? "0" : "1")};
+  top: ${(props) => (!props.open ? "40rem" : "-1rem")};
+  opacity: ${(props) => (!props.open ? "0" : "1")};
   margin: 1rem 0;
   justify-content: space-between;
   align-items: center;
   flex-direction: column;
   padding: 1rem;
   border-radius: 10px;
-  z-index: 1;
+  z-index: 56;
   transition: all ease-out 150ms;
 `;

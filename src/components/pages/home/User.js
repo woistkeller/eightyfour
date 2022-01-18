@@ -1,13 +1,17 @@
+//ux
 import { useEffect, useState } from "react";
 
+//syles
 import styled from "styled-components";
 import { Rating } from "@mui/material";
 
-import { useAuth } from "../../../hooks/useAuth";
-
+//components
 import Song from "./Song";
 
-export default function Login() {
+//redux stuff
+import { useAuth } from "../../../hooks/useAuth";
+
+export default function User() {
   const [activing, setActiving] = useState(false);
 
   const user = useAuth().user;
@@ -20,7 +24,7 @@ export default function Login() {
 
   return (
     <Container actived={activing}>
-      <User>
+      <Profile>
         <FirstLine>
           {user.name}
           <Rating
@@ -31,7 +35,7 @@ export default function Login() {
           />
         </FirstLine>
         <Bio>{user.bio}</Bio>
-      </User>
+      </Profile>
 
       {typeof user.song.title !== "undefined" && <Song song={user.song} />}
     </Container>
@@ -39,20 +43,23 @@ export default function Login() {
 }
 
 const Container = styled.div`
-  position: relative;
   display: flex;
-  width: 100%;
-  height: 100%;
-  margin: 1rem 0;
   justify-content: space-between;
   align-items: center;
   flex-direction: column;
+  position: relative;
+
+  top: ${(props) => (props.actived ? "0" : "5rem")};
+
+  width: 100%;
+  height: 100%;
+  margin: 1rem 0;
   padding: 1rem;
   border-radius: 10px;
   background-color: white;
-  top: ${(props) => (props.actived ? "0" : "5rem")};
-  opacity: ${(props) => (props.actived ? "1" : "0")};
   transition: all ease-out 100ms;
+
+  opacity: ${(props) => (props.actived ? "1" : "0")};
 
   @media (max-width: 530px) {
     height: 100%;
@@ -60,7 +67,7 @@ const Container = styled.div`
   }
 `;
 
-const User = styled.div`
+const Profile = styled.div`
   width: 100%;
   font-weight: bold;
 `;
@@ -74,7 +81,7 @@ const FirstLine = styled.div`
 const Bio = styled.div`
   width: 100%;
   padding: 1rem;
-  margin: 1rem 0;
+  margin: 0.6rem 0;
   text-align: justify;
   background-color: #cfcfcf;
   border-radius: 10px;

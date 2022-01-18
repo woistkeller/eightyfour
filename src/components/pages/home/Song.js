@@ -1,7 +1,8 @@
+//ux
 import { useRef, useState, useEffect } from "react";
 
+//styles
 import styled from "styled-components";
-
 import {
   CircularProgress,
   Box,
@@ -10,30 +11,26 @@ import {
   Tooltip,
 } from "@mui/material";
 
+//icons
 import { HiVolumeUp } from "react-icons/hi";
 import { BsFillPlayFill, BsFillPauseFill } from "react-icons/bs";
 import { IoMdAlert } from "react-icons/io";
 
+//components
 import Volume from "./Volume";
+
+//looking for the progress bar? thatF is in the futher
 
 export default function Song({ song }) {
   const player = useRef();
-  const [isPlaying, setIsplaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [percentage, setPercentage] = useState();
   const [intervalId, setIntervalId] = useState();
-  const [isOpen, setIsopen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
-  useEffect(() => {
-    player.current.volume = 0.5;
-  });
-
-  function handleOpen() {
-    setIsopen(!isOpen);
-  }
-
-  function handleVolume(volume) {
+  var handleVolume = (volume) => {
     player.current.volume = volume;
-  }
+  };
 
   function handleProgress() {
     if (isPlaying === true) {
@@ -43,7 +40,7 @@ export default function Song({ song }) {
           if (percentageTemp > 100) {
             player.current.pause();
             player.current.currentTime = 0;
-            setIsplaying(false);
+            setIsPlaying(false);
             setPercentage(0);
           }
           setPercentage(percentageTemp);
@@ -56,17 +53,15 @@ export default function Song({ song }) {
   }
 
   function handlePlayer() {
-    player.current.volume = 0.1;
-
     if (isPlaying) {
       handleProgress();
       player.current.currentTime = 0;
       player.current.pause();
-      setIsplaying(false);
+      setIsPlaying(false);
       setPercentage(0);
     } else {
       player.current.play();
-      setIsplaying(true);
+      setIsPlaying(true);
     }
   }
 
@@ -75,7 +70,7 @@ export default function Song({ song }) {
     player.current.currentTime = 0;
     player.current.volume = 0.5;
     player.current.pause();
-    setIsplaying(false);
+    setIsPlaying(false);
     setPercentage(0);
   }, [song]);
 
@@ -94,17 +89,15 @@ export default function Song({ song }) {
         </Artist>
       </Info>
       <Controller>
-        {song.preview !== null ? (
-          <IconButton size="small" onClick={handleOpen}>
+        {typeof song.preview !== "undefined" && (
+          <IconButton size="small" onClick={() => setIsOpen(!isOpen)}>
             <HiVolumeUp color="black" />
           </IconButton>
-        ) : null}
-        {isOpen && <Volume propsVolume={handleVolume} />}
-        {song.preview == null ? (
+        )}
+        {isOpen && <Volume handleVolume={handleVolume} />}
+        {typeof song.preview === "undefined" ? (
           <Tooltip title="some previews are not available">
-            <IconButton>
-              <IoMdAlert color="red" />
-            </IconButton>
+            <IoMdAlert color="red" />
           </Tooltip>
         ) : (
           <IconButton size="small" onClick={handlePlayer}>
@@ -119,33 +112,27 @@ export default function Song({ song }) {
   );
 }
 
-const Container = styled.div`
+const Container = styled.li`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.3rem 0.8rem;
-  margin-top: 1rem;
-  overflow: hidden;
+  padding: 0.2rem 0.5rem;
   background-color: #dedede;
   border-radius: 10px;
   width: 100%;
-  font-weight: bolder;
 `;
 
 const Info = styled.div`
-  text-indent: 0.7rem;
+  text-indent: 0.5rem;
   width: 100%;
   text-align: left;
   overflow: hidden;
 `;
 
-const Title = styled.div`
-  overflow: hidden;
-`;
+const Title = styled.div``;
 
 const Artist = styled.div`
   color: grey;
-  overflow: hidden;
 `;
 
 const Controller = styled.div`

@@ -1,26 +1,14 @@
-import { useState, useEffect } from "react";
+//ux
+import { useState } from "react";
 
+//styles
 import styled from "styled-components";
-
 import { Stack, Slider } from "@mui/material";
 
-export default function Volume({ propsVolume }) {
+export default function Volume({ handleVolume }) {
   const [volume, setVolume] = useState(50);
-  const [activing, setActiving] = useState(false);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setActiving(true);
-    }, 20);
-  }, []);
-
-  function handleVolume(e, newVolume) {
-    setVolume(newVolume);
-    propsVolume(volume / 100);
-  }
-
   return (
-    <Container actived={activing}>
+    <Container>
       <Stack
         spacing={2}
         direction="row"
@@ -32,7 +20,10 @@ export default function Volume({ propsVolume }) {
           size="small"
           style={{ color: "#5834eb" }}
           value={volume}
-          onChange={handleVolume}
+          onChange={(value, newValue) => {
+            setVolume(newValue);
+            handleVolume(newValue / 100);
+          }}
         />
       </Stack>
     </Container>
@@ -40,13 +31,6 @@ export default function Volume({ propsVolume }) {
 }
 
 const Container = styled.div`
-  position: relative;
-  border-radius: 10px;
-  z-index: 2;
   width: 7rem;
-  margin: 1rem;
-
-  top: ${(props) => (props.actived ? "0m" : "5rem")};
-  opacity: ${(props) => (props.actived ? "1" : "0")};
-  transition: all ease-out 100ms;
+  margin: 0 0.5rem;
 `;

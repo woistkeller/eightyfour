@@ -1,24 +1,24 @@
+//ux
 import { useState } from "react";
 
+//styles
 import styled from "styled-components";
-
 import { Rating, Button } from "@mui/material";
 
-import Song from "../Song";
-
+//apis
 import searchAPI from "../../../../api/search.api";
 
+//reduxstuffF
 import { useAuth } from "../../../../hooks/useAuth";
 
-export default function User({ user }) {
+//components
+import Song from "../Song";
+
+export default function User({ user, handleRated }) {
   const [rating, setRating] = useState(3);
   const [response, setResponse] = useState({ status: false });
 
   const loggedUser = useAuth().user;
-
-  function handleChange(e, newRating) {
-    setRating(newRating);
-  }
 
   var handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,9 +28,9 @@ export default function User({ user }) {
         user._id,
         loggedUser.token
       );
-      if (response.status === true)
-        setResponse({ message: response.message, status: true });
-      else setResponse({ message: "users hasn't found", status: false });
+      response.status === true
+        ? setResponse({ message: response.message, status: true })
+        : setResponse({ message: "users hasn't found", status: false });
     } catch (er) {
       setResponse({ message: "an error occur, sorry", status: false });
     }
@@ -39,80 +39,106 @@ export default function User({ user }) {
   return (
     <Container>
       <div>
-        <FirstLine>
-          {user.username}
-          <div>
+        <Profile>
+          <FirstLine>
+            {user.username}
             <Rating
               name="read-only"
               value={user.rating}
               precision={0.1}
               readOnly
             />
-          </div>
-        </FirstLine>
-        <Bio>{user.bio}</Bio>
-      </div>
-      {user.userRating.alreadyRated || response.status ? (
-        <Card>
-          Rate User
-          <Rating
-            name="read-only"
-            precision={0.1}
-            readOnly
-            value={
-              user.userRating.alreadyRated ? user.userRating.rating : rating
-            }
-          />
-          <Button margin="normal" disabled size="small" variant="contained">
-            User rated
-          </Button>
-        </Card>
-      ) : (
-        <Card>
-          Rate User
-          <form
-            onSubmit={(e) => {
-              handleSubmit(e);
-            }}
-            style={{ width: "100%", display: "flex", flexDirection: "column" }}
-          >
+          </FirstLine>
+          <Bio z>{user.bio}</Bio>
+        </Profile>
+
+        {user.userRating.alreadyRated || response.status ? (
+          <Card>
+            Rate User
             <Rating
-              value={rating}
-              onChange={(e, newRating) => handleChange(e, newRating)}
+              name="read-only"
+              precision={0.1}
+              readOnly
+              style={{ marginTop: "1rem" }}
+              value={
+                user.userRating.alreadyRated ? user.userRating.rating : rating
+              }
             />
-            <Button
-              type="submit"
-              margin="normal"
-              size="small"
-              variant="contained"
-            >
-              Rate
+            <Button disabled variant="contained" style={{ marginTop: "1rem" }}>
+              User rated
             </Button>
-          </form>
-        </Card>
-      )}
-      {typeof user.song.title !== "undefined" && <Song song={user.song}></Song>}
+          </Card>
+        ) : (
+          <Card>
+            Rate User
+            <form
+              onSubmit={(e) => {
+                handleSubmit(e);
+              }}
+            >
+              <Rating
+                value={rating}
+                onChange={(e, newRating) => setRating(newRating)}
+                style={{ marginTop: "1rem" }}
+              />
+              <Button
+                type="submit"
+                variant="contained"
+                fullWidth
+                onClick={handleRated}
+                style={{ marginTop: "1rem" }}
+              >
+                Rate user
+              </Button>
+            </form>
+          </Card>
+        )}
+      </div>
+      <div>{typeof user.song !== "undefined" && <Song song={user.song} />}</div>
     </Container>
   );
 }
 
 const Container = styled.div`
-  width: 100%;
-  height: 100%;
-  border-radius: 10px;
-  /* background: linear-gradient(180deg, #5834eb, #5146f0); */
-  background-color: white;
-  font-weight: bolder;
-  margin-top: 1rem;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+
+  margin-top: 1rem;
   padding: 1rem;
-  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  border-radius: 10px;
+  background-color: white;
+  font-weight: bold;
 
   @media (max-width: 530px) {
     height: 100%;
     padding: 0.5rem;
   }
+`;
+
+const Card = styled.div`
+  display: flex;
+  flex-direction: column;
+  background-color: #cfcfcf;
+  border-radius: 10px;
+  margin: 1rem 0;
+  padding: 1rem;
+`;
+
+const Profile = styled.div`
+  width: 100%;
+  font-weight: bold;
 `;
 
 const FirstLine = styled.div`
@@ -121,23 +147,10 @@ const FirstLine = styled.div`
   align-items: center;
 `;
 
-const Card = styled.div`
-  background-color: white;
-  border-radius: 10px;
-  padding: 0.5rem;
-  display: flex;
-  flex-direction: column;
-  margin: 0.5rem 0;
-  width: 100%;
-  > * {
-    margin: 0.5rem 0;
-  }
-`;
-
 const Bio = styled.div`
   width: 100%;
   padding: 1rem;
-  margin: 1rem 0;
+  margin: 0.6rem 0;
   text-align: justify;
   background-color: #cfcfcf;
   border-radius: 10px;
