@@ -7,12 +7,10 @@
 ### **Want an app that uses Redux to overkill simple state management in React to have fun with your friends? Try the [Eighty Four](https://eightyfour.vercel.app)**
 
 ## **About**
-I created EightyFour to learn, critique(social credit platforms) and demonstrate my knowledge in react. And I faced a lot of problems, and now, I not only learned a lot about React nesting, Re-renders and state, but how not to make a messy code. I'm a little proud, not for what EightyFour became, but for what I learned from it. My latest projects couldn't be as good without Eighty Four.
+I created Eighty Four to learn, critique(social credit platforms) and demonstrate my knowledge in react. And I faced a lot of problems, and now, I not only learned a lot about React nesting, Re-renders and state, but how not to make a messy code. I'm a little proud, not for what Eighty Four became, but for what I learned from it. My latest projects couldn't be as good without Eighty Four.
 
 
 ## **Issues**
-
-All these issues will be resolved over time due to my lack of time, active studies and side projects.
 
 - [ ] Users rating not updating after rate added
 - [ ] Logged user rating not update due Redux-Persist
