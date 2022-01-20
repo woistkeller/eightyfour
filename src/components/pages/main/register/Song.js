@@ -1,4 +1,4 @@
-//react
+//utilities
 import { useRef, useState, useEffect } from "react";
 
 //styles

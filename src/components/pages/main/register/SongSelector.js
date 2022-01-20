@@ -1,12 +1,15 @@
+//utilities
 import { useState, useRef } from "react";
 
+//styles
 import styled from "styled-components";
-
 import { Button, TextField } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 
+//api
 import spotifyAPI from "../../../../api/spotify.api.js";
 
+//components
 import Songs from "./Songs";
 
 export default function SongSelector({ open, handleSong }) {
@@ -44,7 +47,7 @@ export default function SongSelector({ open, handleSong }) {
           variant="contained"
           loading={isLoading}
           type="submit"
-          color="primary"
+          style={{ marginTop: "1rem" }}
         >
           search
         </LoadingButton>
@@ -55,7 +58,6 @@ export default function SongSelector({ open, handleSong }) {
 
       <Button
         fullWidth
-  
         variant="outlined"
         style={{
           background: "#141414",

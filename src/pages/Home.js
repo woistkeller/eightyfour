@@ -1,4 +1,4 @@
-//ux
+//utilities
 import { useState } from "react";
 
 //styles

@@ -1,12 +1,14 @@
+//router
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import PrivateRoute from "./pages/PrivateRoute";
 
+//styles
 import styled from "styled-components";
 
+//components
 import Main from "./pages/Main";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
-
-import PrivateRoute from "./pages/PrivateRoute";
 
 export default function App() {
   return (

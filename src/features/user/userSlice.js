@@ -26,6 +26,9 @@ const user = createSlice({
       state.song.cover = action.payload.song.cover;
       state.song.preview = action.payload.song.preview;
     },
+    updateUserRating: (state, action) => {
+      state.user = action.payload;
+    },
     unSetUser: (state) => {
       state.name = "";
       state.rating = "";

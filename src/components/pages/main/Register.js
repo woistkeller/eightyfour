@@ -1,14 +1,18 @@
+//utilities
 import { useState, useEffect } from "react";
 
+//styles
 import styled from "styled-components";
-
 import { Button, Alert, TextField, Typography } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 
+//icons
 import { BsSpotify } from "react-icons/bs";
 
+//api
 import registerAPI from "../../../api/register.api.js";
 
+//components
 import SongSelector from "./register/SongSelector";
 
 export default function Register() {

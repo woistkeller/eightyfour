@@ -1,5 +1,7 @@
+//styles
 import styled from "styled-components";
 
+//components
 import Song from "./Song";
 
 export default function Songs({ songs, handleSong }) {

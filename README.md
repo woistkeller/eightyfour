@@ -11,7 +11,6 @@ I created EightyFour to learn, critique(social credit platforms) and demonstrate
 
 
 ## **Issues**
-
 All these issues will be resolved over time due to my lack of time, active studies and side projects.
 
 - [ ] Users rating not updating after rate added
@@ -27,6 +26,8 @@ We are doing very well, hum
 
 **If you wanna help**
 
-Keep this in mind: to understand the folders, just think like that of the actual project. The folders are related to the real nest, like in the app. I thought it was the easiest way to have a good understanding of the code. Now, they just look kind of weird. But putting them in a single folder doesn't look very good to me.
+Keep this in mind: to understand the folders, just think like that of the actual project. The folders are related to the real nest, like in the app. I thought it was the easiest way to have a good understanding of the code. Now, they just look kind of weird. But putting them in a single folder doesn't look very good to me, even more so when multiple components.
 
-Everything follows its respective documentation. Ex.: redux-toolkit says to put the store inside the application.  So you'll do fine.
+Everything follows its respective documentation. You will find the Redux stuff in `src/app`, and its "slices" in `src/features`. The RTK api is in `src/app/api`.
+
+I made for each part of the project, a different file for the api. I wouldn't do that again😅.

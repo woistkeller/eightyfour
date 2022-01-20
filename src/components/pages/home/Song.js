@@ -1,4 +1,4 @@
-//ux
+//utilities
 import { useRef, useState, useEffect } from "react";
 
 //styles
@@ -19,7 +19,7 @@ import { IoMdAlert } from "react-icons/io";
 //components
 import Volume from "./Volume";
 
-//looking for the progress bar? thatF is in the futher
+//looking for the progress bar? that is in the futher
 
 export default function Song({ song }) {
   const player = useRef();

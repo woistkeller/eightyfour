@@ -1,9 +1,12 @@
-import styled from "styled-components";
+//utilities
 import { useState } from "react";
 
+//styles
+import styled from "styled-components";
+
+//components
 import Register from "../components/pages/main/Register";
 import Login from "../components/pages/main/Login";
-
 import Button from "@mui/material/Button";
 
 export default function Main() {

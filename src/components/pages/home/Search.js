@@ -1,14 +1,16 @@
+//utilities
 import { useEffect, useState, useRef } from "react";
 
+//styles
 import styled from "styled-components";
-
 import { Alert, TextField } from "@mui/material";
-
 import { LoadingButton } from "@mui/lab";
 
+//reduxstuff
 import { useAuth } from "../../../hooks/useAuth";
 import searchAPI from "../../../api/search.api";
 
+//components
 import User from "./search/User";
 
 export default function Search() {

@@ -1,4 +1,4 @@
-//ux
+//utilities
 import { useEffect, useState } from "react";
 
 //syles
@@ -12,6 +12,8 @@ import Song from "./Song";
 import { useAuth } from "../../../hooks/useAuth";
 
 export default function User() {
+  useEffect(() => {}, []);
+
   const [activing, setActiving] = useState(false);
 
   const user = useAuth().user;
