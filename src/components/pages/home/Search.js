@@ -6,9 +6,11 @@ import styled from "styled-components";
 import { Alert, TextField } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 
+//api
+import searchAPI from "../../../api/search.api";
+
 //reduxstuff
 import { useAuth } from "../../../hooks/useAuth";
-import searchAPI from "../../../api/search.api";
 
 //components
 import User from "./search/User";
@@ -29,6 +31,7 @@ export default function Search() {
 
   var handleRated = async () => {
     const response = await searchAPI.search(search.current.value, user.token);
+    console.log(response);
     setResponse(response.message);
   };
 

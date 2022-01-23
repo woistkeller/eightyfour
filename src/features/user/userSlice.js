@@ -27,7 +27,7 @@ const user = createSlice({
       state.song.preview = action.payload.song.preview;
     },
     updateUserRating: (state, action) => {
-      state.user = action.payload;
+      state.rating = action.payload;
     },
     unSetUser: (state) => {
       state.name = "";
@@ -43,5 +43,5 @@ const user = createSlice({
   },
 });
 
-export const { setUser, unSetUser } = user.actions;
+export const { setUser, unSetUser, updateUserRating } = user.actions;
 export default user.reducer;

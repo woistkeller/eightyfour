@@ -5,13 +5,20 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Rating } from "@mui/material";
 
+//api
+import searchAPI from "../../../api/search.api";
+
 //components
 import Song from "./Song";
 
 //redux stuff
+import { useDispatch } from "react-redux";
+import { updateUserRating } from "../../../features/user/userSlice";
 import { useAuth } from "../../../hooks/useAuth";
 
 export default function User() {
+  const dispatch = useDispatch();
+
   useEffect(() => {}, []);
 
   const [activing, setActiving] = useState(false);
@@ -19,10 +26,19 @@ export default function User() {
   const user = useAuth().user;
 
   useEffect(() => {
+
+    //fetching user again to request and update current rating
+    var fetching = async () => {
+      const rating = await searchAPI.search(user.name, user.token);
+      dispatch(updateUserRating(rating.message.rating));
+    };
+
+    fetching();
+
     setTimeout(() => {
       setActiving(true);
     }, 20);
-  }, []);
+  });
 
   return (
     <Container actived={activing}>
