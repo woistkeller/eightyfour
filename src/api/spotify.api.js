@@ -3,12 +3,9 @@ import axios from "axios";
 const spotifyAPI = {
   getSpotifyContent: (search) => {
     return axios
-      .get("https://eightyfourserver.herokuapp.com/spotify", {
+      .get(`https://eightyfourserver.herokuapp.com/spotify/${search}`, {
         headers: {
           "spotify-jwt-token": `${localStorage.getItem("spotify-jwt-token")}`,
-        },
-        params: {
-          search: search,
         },
       })
       .then((response) => {
@@ -18,6 +15,9 @@ const spotifyAPI = {
         );
 
         return response.data.data;
+      })
+      .catch(() => {
+        return "error";
       });
   },
 };

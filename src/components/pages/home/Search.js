@@ -27,12 +27,25 @@ export default function Search() {
     setTimeout(() => {
       setActiving(true);
     }, 20);
-  }, []);
+
+    //i make a init
+    var initFetch = async () => {
+      const result = await searchAPI.search("caian", user.token);
+      result.status === true
+        ? setResponse({ user: result.message })
+        : setResponse({
+            response: result.message.data.message,
+            status: false,
+          });
+    };
+
+    initFetch();
+  }, [user.token]);
 
   var handleRated = async () => {
-    const response = await searchAPI.search(search.current.value, user.token);
-    console.log(response);
-    setResponse(response.message);
+    console.log("triggered");
+    const result = await searchAPI.search(search.current.value, user.token);
+    result.status === true && setResponse({ user: result.message });
   };
 
   var submit = async (e) => {
@@ -41,13 +54,15 @@ export default function Search() {
     setIsLoading(true);
 
     try {
-      const response = await searchAPI.search(search.current.value, user.token);
-
-      response.status === true
-        ? setResponse(response.message)
-        : setResponse({ message: "users hasn't found", status: false });
+      const result = await searchAPI.search(search.current.value, user.token);
+      result.status === true
+        ? setResponse({ user: result.message })
+        : setResponse({
+            message: result.message.data.message,
+            status: false,
+          });
     } catch (er) {
-      setResponse({ message: "an error occur, sorry", status: false });
+      setResponse({ message: er.message, status: false });
     }
 
     setIsLoading(false);
@@ -78,7 +93,7 @@ export default function Search() {
         </LoadingButton>
       </Form>
       {response.status !== "" && response.status !== false ? (
-        <User user={response} handleRated={handleRated} />
+        <User person={response.user} handleRated={handleRated} />
       ) : (
         response.status !== "" && (
           <Alert

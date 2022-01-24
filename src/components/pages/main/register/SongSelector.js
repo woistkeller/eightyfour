@@ -52,9 +52,11 @@ export default function SongSelector({ open, handleSong }) {
           search
         </LoadingButton>
       </form>
-      {typeof songs !== "undefined" ? (
+      {typeof songs !== "undefined" && songs !== "error" ? (
         <Songs songs={songs} handleSong={handleSong} />
-      ) : null}
+      ) : (
+        songs === "error" && "An unexpected error occurred"
+      )}
 
       <Button
         fullWidth

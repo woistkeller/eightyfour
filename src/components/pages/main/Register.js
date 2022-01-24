@@ -58,7 +58,7 @@ export default function Register() {
         setResponse({ message: response.message, status: false });
       }
     } catch (er) {
-      setResponse({ message: "an error occur, sorry", status: false });
+      setResponse({ message: "An error occurred", status: false });
     }
 
     setIsloading(false);
@@ -76,7 +76,7 @@ export default function Register() {
           fullWidth
           required
           onChange={(e) => {
-            setUsername(e.target.value);
+            setUsername(e.target.value.toLowerCase());
           }}
           value={username}
           variant="outlined"

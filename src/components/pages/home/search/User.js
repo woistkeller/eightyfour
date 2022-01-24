@@ -3,7 +3,7 @@ import { useState } from "react";
 
 //styles
 import styled from "styled-components";
-import { Rating, Button } from "@mui/material";
+import { Rating, Button, Alert } from "@mui/material";
 
 //apis
 import searchAPI from "../../../../api/search.api";
@@ -14,25 +14,22 @@ import { useAuth } from "../../../../hooks/useAuth";
 //components
 import Song from "../Song";
 
-export default function User({ user, handleRated }) {
+export default function User({ person, handleRated }) {
+  console.log(person);
   const [rating, setRating] = useState(3);
   const [response, setResponse] = useState({ status: false });
 
-  const loggedUser = useAuth().user;
+  const user = useAuth().user;
 
   var handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await searchAPI.rating(
-        rating,
-        user._id,
-        loggedUser.token
-      );
-      response.status === true
-        ? setResponse({ message: response.message, status: true })
-        : setResponse({ message: "users hasn't found", status: false });
+      const result = await searchAPI.rating(rating, person._id, user.token);
+      result.status === true
+        ? setResponse({ status: true })
+        : setResponse({ message: "An error occurred", status: false });
     } catch (er) {
-      setResponse({ message: "an error occur, sorry", status: false });
+      setResponse({ message: "An error occurred", status: false });
     }
   };
 
@@ -41,18 +38,18 @@ export default function User({ user, handleRated }) {
       <div>
         <Profile>
           <FirstLine>
-            {user.username}
+            {person.username}
             <Rating
               name="read-only"
-              value={user.rating}
+              value={person.rating}
               precision={0.1}
               readOnly
             />
           </FirstLine>
-          <Bio z>{user.bio}</Bio>
+          <Bio>{person.bio}</Bio>
         </Profile>
 
-        {user.userRating.alreadyRated || response.status ? (
+        {person.userRating.alreadyRated ? (
           <Card>
             Rate User
             <Rating
@@ -61,7 +58,9 @@ export default function User({ user, handleRated }) {
               readOnly
               style={{ marginTop: "1rem" }}
               value={
-                user.userRating.alreadyRated ? user.userRating.rating : rating
+                person.userRating.alreadyRated
+                  ? person.userRating.rating
+                  : rating
               }
             />
             <Button disabled variant="contained" style={{ marginTop: "1rem" }}>
@@ -94,7 +93,22 @@ export default function User({ user, handleRated }) {
           </Card>
         )}
       </div>
-      <div>{typeof user.song !== "undefined" && <Song song={user.song} />}</div>
+      <div>
+        {typeof person.song !== "undefined" && <Song song={person.song} />}
+      </div>
+      {response.status === false && (
+        <Alert
+          fullWidth
+          variant="filled"
+          severity="error"
+          style={{
+            marginTop: "1rem",
+            width: "100%",
+          }}
+        >
+          {response.message}
+        </Alert>
+      )}
     </Container>
   );
 }
