@@ -43,7 +43,6 @@ export default function Search() {
   }, [user.token]);
 
   var handleRated = async () => {
-    console.log("triggered");
     const result = await searchAPI.search(search.current.value, user.token);
     result.status === true && setResponse({ user: result.message });
   };
@@ -97,7 +96,6 @@ export default function Search() {
       ) : (
         response.status !== "" && (
           <Alert
-            fullWidth
             variant="filled"
             severity="error"
             style={{

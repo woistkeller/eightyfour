@@ -15,7 +15,6 @@ import { useAuth } from "../../../../hooks/useAuth";
 import Song from "../Song";
 
 export default function User({ person, handleRated }) {
-  console.log(person);
   const [rating, setRating] = useState(3);
   const [response, setResponse] = useState({ status: false });
 
@@ -96,19 +95,19 @@ export default function User({ person, handleRated }) {
       <div>
         {typeof person.song !== "undefined" && <Song song={person.song} />}
       </div>
-      {response.status === false && (
-        <Alert
-          fullWidth
-          variant="filled"
-          severity="error"
-          style={{
-            marginTop: "1rem",
-            width: "100%",
-          }}
-        >
-          {response.message}
-        </Alert>
-      )}
+      {response.status === false ||
+        (response.status !== "" && (
+          <Alert
+            variant="filled"
+            severity="error"
+            style={{
+              marginTop: "1rem",
+              width: "100%",
+            }}
+          >
+            {response.message}
+          </Alert>
+        ))}
     </Container>
   );
 }
