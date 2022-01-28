@@ -43,8 +43,8 @@ export default function Register() {
 
   var submit = async (e) => {
     e.preventDefault();
-
     setIsloading(true);
+
     try {
       const response = await registerAPI.register(
         username,
@@ -52,11 +52,9 @@ export default function Register() {
         bio,
         song
       );
-      if (response.status === true) {
-        setResponse({ message: "successfully registered", status: true });
-      } else {
-        setResponse({ message: response.message, status: false });
-      }
+      response.status === true
+        ? setResponse({ message: "successfully registered", status: true })
+        : setResponse({ message: response.message, status: false });
     } catch (er) {
       setResponse({ message: "An error occurred", status: false });
     }
@@ -208,6 +206,7 @@ const Container = styled.div`
   justify-content: space-between;
   align-items: center;
   flex-direction: column;
+
   right: ${(props) => (props.actived ? "0" : "5rem")};
   opacity: ${(props) => (props.actived ? "1" : "0")};
   transition: all ease-out 100ms;

@@ -34,24 +34,23 @@ export default function Login() {
 
   var handleSubmit = async (e) => {
     e.preventDefault();
-
     setIsLoading(true);
+
     if (username.length === 0 || password.length === 0) {
       setError({
         message: "Please enter a username and password",
         error: "true",
       });
-      setIsLoading(false);
     }
 
     const { data, error } = await auth({ username, password });
 
-    if (typeof error !== "undefined")
-      if (error.status !== 200)
-        setError({
-          message: error.data.message,
-          error: "true",
-        });
+    if (typeof error !== "undefined" && error.status !== 200) {
+      setError({
+        message: error.data.message,
+        error: "true",
+      });
+    }
 
     if (typeof data !== "undefined") {
       if (data.ok) {
@@ -66,10 +65,7 @@ export default function Login() {
         );
         navigate("/home");
       }
-
-      setIsLoading(false);
     }
-
     setIsLoading(false);
   };
 

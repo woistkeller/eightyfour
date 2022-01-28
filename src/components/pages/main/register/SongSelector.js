@@ -20,8 +20,14 @@ export default function SongSelector({ open, handleSong }) {
   var handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    const temp = await spotifyAPI.getSpotifyContent(search.current.value);
-    setSongs(temp);
+
+    try {
+      const result = await spotifyAPI.getSpotifyContent(search.current.value);
+      setSongs(result);
+    } catch (er) {
+      setSongs("error");
+    }
+
     setIsLoading(false);
   };
 
@@ -77,16 +83,17 @@ export default function SongSelector({ open, handleSong }) {
 
 const Container = styled.div`
   display: flex;
-  background-color: white;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: ${(props) => (!props.open ? "40rem" : "-1rem")};
-  opacity: ${(props) => (!props.open ? "0" : "1")};
-  margin: 1rem 0;
   justify-content: space-between;
   align-items: center;
   flex-direction: column;
+  position: absolute;
+  top: ${(props) => (!props.open ? "40rem" : "-1rem")};
+  opacity: ${(props) => (!props.open ? "0" : "1")};
+
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  margin: 1rem 0;
   padding: 1rem;
   border-radius: 10px;
   z-index: 56;

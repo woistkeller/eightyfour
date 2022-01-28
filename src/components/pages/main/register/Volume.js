@@ -5,10 +5,11 @@ import { useState } from "react";
 import styled from "styled-components";
 import { Stack, Slider } from "@mui/material";
 
-export default function Volume({ handleVolume }) {
+export default function Volume({ handleVolume, isOpen }) {
+  console.log(isOpen);
   const [volume, setVolume] = useState(50);
   return (
-    <Container>
+    <Container isOpen={isOpen}>
       <Stack
         spacing={2}
         direction="row"
@@ -31,6 +32,7 @@ export default function Volume({ handleVolume }) {
 }
 
 const Container = styled.div`
+  display: ${(props) => (props.isOpen ? "" : "none")};
   width: 7rem;
   margin: 0 0.5rem;
 `;

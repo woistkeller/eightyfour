@@ -24,10 +24,10 @@ export default function Song({ song, handleSong }) {
   const player = useRef();
   const [isPlaying, setIsplaying] = useState(false);
   const [percentage, setPercentage] = useState();
-  const [intervalId, setIntervalId] = useState();
   const [isOpen, setIsopen] = useState(false);
 
   var handleVolume = (volume) => {
+    console.log(volume);
     player.current.volume = volume;
   };
 
@@ -35,41 +35,38 @@ export default function Song({ song, handleSong }) {
     setIsplaying(false);
     setPercentage(0);
     setIsopen(false);
-    player.current.volume = 0.5;
   }, [song]);
 
-  var handleProgress = () => {
-    if (isPlaying === true) {
-      var intervalIdtemp = setInterval(() => {
-        try {
-          const percentageTemp = (player.current.currentTime / 30) * 100;
-          if (percentageTemp > 100) {
-            player.current.pause();
-            player.current.currentTime = 0;
-            setIsplaying(false);
-            setPercentage(0);
-          }
-          setPercentage(percentageTemp);
-        } catch (e) {
-          clearInterval(intervalId);
+  useEffect(() => {
+    var interval;
+
+    interval = setInterval(() => {
+      try {
+        const percentageTemp = (player.current.currentTime / 30) * 100;
+        console.log(percentageTemp);
+        if (percentageTemp > 100) {
+          player.current.pause();
+          player.current.currentTime = 0;
+          setIsplaying(false);
+          setPercentage(0);
+          clearInterval(interval);
         }
-      }, 1000);
-      setIntervalId(intervalIdtemp);
-    } else clearInterval(intervalId);
-  };
+        setPercentage(percentageTemp);
+      } catch (e) {
+        clearInterval(interval);
+      }
+    }, 1000);
+  }, [isPlaying]);
 
   var handlePlayer = () => {
-    player.current.volume = 0.5;
-
     if (isPlaying) {
-      handleProgress();
       player.current.currentTime = 0;
       player.current.pause();
       setIsplaying(false);
       setPercentage(0);
     } else {
-      player.current.play();
       setIsplaying(true);
+      player.current.play();
     }
   };
 
@@ -95,12 +92,12 @@ export default function Song({ song, handleSong }) {
         </Artist>
       </Info>
       <Controller>
-        {song.preview_url !== null ? (
-          <IconButton size="small">
+        {song.preview_url !== null && (
+          <IconButton size="small" onClick={() => setIsopen(!isOpen)}>
             <HiVolumeUp color="black" />
           </IconButton>
-        ) : null}
-        {isOpen && <Volume propsVolume={handleVolume} />}
+        )}
+        <Volume handleVolume={handleVolume} isOpen={isOpen} />
         {song.preview_url == null ? (
           <Tooltip title="some previews are not available">
             <IconButton>
