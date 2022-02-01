@@ -6,10 +6,14 @@ import { Link } from "react-router-dom";
 export default function NotFound() {
   return (
     <Container>
-      <Typography variant="h5">Not Found</Typography>
-      <Link to="/">
-        <Button>Back to home</Button>
-      </Link>
+      <Box>
+        <Typography variant="h5">Are you lost?</Typography>
+        <Link to="/">
+          <Button variant="contained" size="small">
+            back to surface
+          </Button>
+        </Link>
+      </Box>
     </Container>
   );
 }
@@ -32,4 +36,18 @@ const Container = styled.div`
     border-radius: 0;
     padding: 0.7rem;
   }
+`;
+
+const Box = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+  border-radius: 10px;
+  background-color: white;
+  transition: all ease-out 100ms;
 `;
