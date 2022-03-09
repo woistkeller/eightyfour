@@ -30,6 +30,6 @@ Keep this in mind: to understand the folders, just think like that of the actual
 Everything follows its respective documentation. You will find the Redux stuff in `src/app`, and its "slices" in `src/features`. The RTK api is in `src/app/api`.
 
 #### **How to run**
-This project is linked to an external backend created by me, available at this [link](https://github.com/vonweinkeller/eightyfourserver). You can download it and run it on your computer, thus having a whole local environment (both are open source and free to use as you wish).
+This project is linked to an external backend created by me, available at this [link](https://github.com/vonweinkeller/eightyfour-server). You can download it and run it on your computer, thus having a whole local environment (both are open source and free to use as you wish).
 
 I made for each part of the project, a different file for the api. I wouldn't do that again 😅. But I think this way a little bit more organised.
